@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">BusBooking</h1>
+            <div class="nav-links">
+                <a href="#" id="homeLink">Home</a>
+                <a href="#" id="loginLink">Login</a>
+                <a href="#" id="registerLink">Register</a>
+                <a href="#" id="dashboardLink" style="display: none;">Dashboard</a>
+                <a href="#" id="adminLink" style="display: none;">Admin</a>
+                <a href="#" id="profileLink" style="display: none;">Profile</a>
+                <a href="#" id="logoutLink" style="display: none;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div id="homePage" class="page active">
+    <div class="hero">
+        <h1>Book Your Bus Journey in Tamil Nadu</h1>
+        <p>Comfortable, Safe, and Affordable Travel Across Tamil Nadu</p>
+        
+        <div class="search-form">
+            <input type="text" id="source" placeholder="From (e.g., Chennai)" list="cityList">
+            <input type="text" id="destination" placeholder="To (e.g., Coimbatore)" list="cityList">
+            <input type="date" id="travelDate" required>
+            <button onclick="searchBuses()">Search Buses</button>
+        </div>
+        
+        <datalist id="cityList">
+            <option value="Chennai">
+            <option value="Coimbatore">
+            <option value="Madurai">
+            <option value="Trichy">
+            <option value="Salem">
+            <option value="Tirunelveli">
+            <option value="Erode">
+            <option value="Vellore">
+            <option value="Bangalore">
+        </datalist>
+    </div>
+
+    <!-- All Buses Section -->
+    <div class="all-buses-section">
+        <h2>Available Buses in Tamil Nadu</h2>
+        <div id="allBusesList" class="buses-list"></div>
+    </div>
+
+    <div id="searchResults" class="results-container" style="display: none;">
+        <h2>Search Results</h2>
+        <div id="busesList" class="buses-list"></div>
+    </div>
+</div>
+
+        <div id="loginPage" class="page">
+            <div class="auth-form">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" onclick="showPage('registerPage')">Register here</a></p>
+            </div>
+        </div>
+
+        <div id="registerPage" class="page">
+            <div class="auth-form">
+                <h2>Register</h2>
+                <form id="registerForm">
+                    <input type="text" id="registerName" placeholder="Full Name" required>
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                    <input type="password" id="registerPassword" placeholder="Password" required>
+                    <input type="tel" id="registerPhone" placeholder="Phone Number" required>
+                    <button type="submit">Register</button>
+                </form>
+                <p>Already have an account? <a href="#" onclick="showPage('loginPage')">Login here</a></p>
+            </div>
+        </div>
+
+        <div id="dashboardPage" class="page">
+            <div class="dashboard">
+                <h2>My Dashboard</h2>
+                <div class="dashboard-actions">
+                    <button onclick="loadMyBookings()">My Bookings</button>
+                    <button onclick="showPage('homePage')">Book New Journey</button>
+                </div>
+                <div id="bookingsList" class="bookings-list"></div>
+            </div>
+        </div>
+
+        <div id="bookingPage" class="page">
+            <div class="booking-container">
+                <h2>Book Seats</h2>
+                <div id="busDetails"></div>
+                <div id="seatLayout" class="seat-layout"></div>
+                <div class="booking-summary">
+                    <h3>Selected Seats: <span id="selectedSeatsCount">0</span></h3>
+                    <p>Total Amount: $<span id="totalAmount">0</span></p>
+                    <button onclick="confirmBooking()" id="confirmBtn" disabled>Confirm Booking</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="adminPage" class="page">
+            <div class="admin-dashboard">
+                <h2>Admin Dashboard</h2>
+                <div class="admin-nav">
+                    <button onclick="showAdminSection('stats')">Statistics</button>
+                    <button onclick="showAdminSection('buses')">Manage Buses</button>
+                    <button onclick="showAdminSection('bookings')">All Bookings</button>
+                    <button onclick="showAdminSection('users')">Users</button>
+                </div>
+                
+                <div id="adminStats" class="admin-section">
+                    <h3>Statistics</h3>
+                    <div class="stats-grid" id="statsGrid"></div>
+                </div>
+                
+                <div id="adminBuses" class="admin-section" style="display: none;">
+                    <h3>Manage Buses</h3>
+                    <button onclick="showAddBusForm()">Add New Bus</button>
+                    <div id="busesManagementList"></div>
+                </div>
+                
+                <div id="adminBookings" class="admin-section" style="display: none;">
+                    <h3>All Bookings</h3>
+                    <div id="allBookingsList"></div>
+                </div>
+                
+                <div id="adminUsers" class="admin-section" style="display: none;">
+                    <h3>Users</h3>
+                    <div id="usersList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="profilePage" class="page">
+            <div class="profile-form">
+                <h2>My Profile</h2>
+                <form id="profileForm">
+                    <input type="text" id="profileName" placeholder="Full Name" required>
+                    <input type="email" id="profileEmail" placeholder="Email" readonly>
+                    <input type="tel" id="profilePhone" placeholder="Phone Number" required>
+                    <button type="submit">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
